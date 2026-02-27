@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 type TargetSize = "Perusahaan Besar" | "Perusahaan Kecil-Menengah";
+type Platform = "whatsapp" | "ig";
 type FieldType =
   | "FMCG"
   | "Banking & Fintech"
@@ -20,6 +21,7 @@ export default function Home() {
   const [brandName, setBrandName] = useState("");
   const [targetSize, setTargetSize] = useState<TargetSize>("Perusahaan Besar");
   const [field, setField] = useState<FieldType>("FMCG");
+  const [platform, setPlatform] = useState<Platform>("whatsapp");
   const [senderName, setSenderName] = useState("");
 
   const [generatedChat, setGeneratedChat] = useState("");
@@ -37,13 +39,17 @@ export default function Home() {
 
     const intro = `Selamat pagi/siang Bapak/Ibu tim ${displayName},\n\nSemoga pesan ini mendapati Bapak/Ibu dalam keadaan baik. Perkenalkan, saya ${myName} dari Panitia I/O Festival 2026 (BEM FTI UNTAR). Kami sedang mempersiapkan festival teknologi tahunan terbesar kami pada 4-5 Juni 2026, yang akan menjadi pusat berkumpulnya ribuan mahasiswa, Gen Z, dan tech enthusiast di Jakarta.`;
 
-    const outroBesar = `Apabila skema Main Tenant belum sesuai, kami menyediakan berbagai opsi partisipasi branding lainnya. Sebagai referensi, saya telah melampirkan Proposal Sponsorship beserta detail denah lokasinya.\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
+    const proposalLink = platform === "ig"
+      ? `Proposal Sponsorship beserta detail denah lokasinya pada tautan berikut:\nhttps://drive.google.com/file/d/1wNSU40xxgfL528gnfLCLt9OoH5OhjaYd/view?usp=sharing`
+      : `Proposal Sponsorship beserta detail denah lokasinya.`;
+
+    const outroBesar = `Apabila skema Main Tenant belum sesuai, kami menyediakan berbagai opsi partisipasi branding lainnya. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
 
     // For specific cases like Banking & Fintech, the prompt didn't include "beserta detail denah lokasinya." in outro,
     // but instructed to use the common outro ("semuanya diapit oleh sapaan pembuka dan penutup yang sama seperti pada nomor 1").
     // We will use the FMCG outro for all to keep it simple and compliant with "secara fungsi semuanya diapit oleh sapaan pembuka dan penutup yang sama".
 
-    const outroKecil = `Selain posisi Tenant, kami juga terbuka jika ${displayName} berminat mengambil peran lebih besar sebagai Sponsor Utama. Sebagai referensi, saya telah melampirkan Proposal Sponsorship beserta detail denah lokasinya.\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
+    const outroKecil = `Selain posisi Tenant, kami juga terbuka jika ${displayName} berminat mengambil peran lebih besar sebagai Sponsor Utama. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
 
     let body = "";
 
@@ -197,6 +203,18 @@ export default function Home() {
               <option value="Beauty & Grooming">Beauty & Grooming</option>
               <option value="Education">Education</option>
               <option value="others">Others / Lainnya (pilih ini kalo gaada yang cocok di option atas)</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">platform</label>
+            <select
+              className="form-input"
+              value={platform}
+              onChange={(e) => setPlatform(e.target.value as Platform)}
+            >
+              <option value="whatsapp">WhatsApp</option>
+              <option value="ig">Instagram</option>
             </select>
           </div>
         </div>
