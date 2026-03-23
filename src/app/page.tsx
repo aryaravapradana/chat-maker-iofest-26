@@ -4,6 +4,7 @@ import { useState } from "react";
 
 type TargetSize = "Perusahaan Besar" | "Perusahaan Kecil-Menengah";
 type Platform = "whatsapp" | "ig";
+type Schedule = "minggu ini" | "minggu depan";
 type FieldType =
   | "FMCG"
   | "Banking & Fintech"
@@ -22,6 +23,7 @@ export default function Home() {
   const [targetSize, setTargetSize] = useState<TargetSize>("Perusahaan Besar");
   const [field, setField] = useState<FieldType>("FMCG");
   const [platform, setPlatform] = useState<Platform>("whatsapp");
+  const [schedule, setSchedule] = useState<Schedule>("minggu ini");
   const [senderName, setSenderName] = useState("");
 
   const [generatedChat, setGeneratedChat] = useState("");
@@ -46,16 +48,16 @@ export default function Home() {
       : `Proposal Sponsorship beserta detail denah lokasinya.`;
 
     const outroBesar = platform === "ig"
-      ? `Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`
-      : `Apabila skema Main Tenant belum sesuai, kami menyediakan berbagai opsi partisipasi branding lainnya. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
+      ? `Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat di ${schedule} guna membahas potensi kolaborasi ini lebih lanjut.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`
+      : `Apabila skema Main Tenant belum sesuai, kami menyediakan berbagai opsi partisipasi branding lainnya. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat di ${schedule} guna membahas potensi kolaborasi ini lebih lanjut.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
 
     // For specific cases like Banking & Fintech, the prompt didn't include "beserta detail denah lokasinya." in outro,
     // but instructed to use the common outro ("semuanya diapit oleh sapaan pembuka dan penutup yang sama seperti pada nomor 1").
     // We will use the FMCG outro for all to keep it simple and compliant with "secara fungsi semuanya diapit oleh sapaan pembuka dan penutup yang sama".
 
     const outroKecil = platform === "ig"
-      ? `Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`
-      : `Selain posisi Tenant, kami juga terbuka jika ${displayName} berminat mengambil peran lebih besar sebagai Sponsor Utama. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat guna membahas potensi kolaborasi ini. Apakah sekiranya Bapak/Ibu memiliki waktu luang di minggu ini?\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
+      ? `Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat di ${schedule} guna membahas potensi kolaborasi ini lebih lanjut.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`
+      : `Selain posisi Tenant, kami juga terbuka jika ${displayName} berminat mengambil peran lebih besar sebagai Sponsor Utama. Sebagai referensi, saya telah melampirkan ${proposalLink}\n\nKami sangat terbuka untuk menjadwalkan pertemuan singkat di ${schedule} guna membahas potensi kolaborasi ini lebih lanjut.\n\nTerima kasih atas waktu dan perhatiannya.\n\nHormat kami,\n${myName}\nI/O Festival 2026 - BEM FTI UNTAR`;
 
     let body = "";
 
@@ -245,6 +247,18 @@ export default function Home() {
             >
               <option value="whatsapp">WhatsApp</option>
               <option value="ig">Instagram</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">waktu meeting</label>
+            <select
+              className="form-input"
+              value={schedule}
+              onChange={(e) => setSchedule(e.target.value as Schedule)}
+            >
+              <option value="minggu ini">Minggu ini</option>
+              <option value="minggu depan">Minggu depan</option>
             </select>
           </div>
         </div>
